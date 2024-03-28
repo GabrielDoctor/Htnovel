@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import Carousel from "react-material-ui-carousel";
 import CarouselItem from "./ui/CarouselItem";
 import Typography from "@mui/material/Typography";
 import BookCard from "./ui/BookCard";
 import Skeleton from "@mui/material/Skeleton";
+import MyCarousel from "./ui/MyCarousel";
 export default function Home() {
   const [booklists, setBooklists] = useState([]);
   const [randomBooks, setRandomBooks] = useState([]);
@@ -47,22 +47,7 @@ export default function Home() {
       {booklists.length > 0 && randomBooks.length > 0 ? (
         <>
           <div className="m-6 w-4/5 lg:w-3/4 mx-auto border-black dark:border-white p-3 border-solid rounded-lg border-2">
-            <Carousel className="h-full w-full">
-              {booklists.length > 0 &&
-                booklists.map((booklist: any) => {
-                  return (
-                    <div key={booklist.id}>
-                      {CarouselItem({
-                        bookId: booklist,
-                        title: booklist.novel_name,
-                        description: booklist.description_text,
-                        img: booklist.cover,
-                        author: booklist.author,
-                      })}
-                    </div>
-                  );
-                })}
-            </Carousel>
+            <MyCarousel booklists={booklists} />
           </div>
           <div className="m-6 max-w-6xl md:ml-10 md:mr-10 lg:ml-40 lg:mr-40">
             <Typography variant="h4" component="h4">

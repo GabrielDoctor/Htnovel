@@ -1,4 +1,4 @@
-export default function EyeGlass({ className }) {
+export default function EyeGlass({ className }: any) {
   return (
     <svg
       className={className}

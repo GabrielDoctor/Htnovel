@@ -41,12 +41,12 @@ export default function RootLayout({
   return (
     <html className={cookies().get("theme")?.value || "light"} lang="en">
       <body className={inter.className + " dark:bg-black dark:text-white"}>
-        <Script
-          defer
-          src="https://admin.htnovel.tech/script.js"
-          data-website-id="049fd73a-0c94-4b77-8191-a0617948210c"
-        ></Script>
         <AppRouterCacheProvider>
+          <Script
+            defer
+            src="https://admin.htnovel.tech/script.js"
+            data-website-id="049fd73a-0c94-4b77-8191-a0617948210c"
+          ></Script>
           <AuthProvider>
             <Navbar />
 

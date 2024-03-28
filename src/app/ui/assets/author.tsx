@@ -1,4 +1,4 @@
-export default function AuthorIcon({ className }) {
+export default function AuthorIcon({ className }: any) {
   return (
     <svg
       className={className}

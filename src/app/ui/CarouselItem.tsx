@@ -1,7 +1,8 @@
+"use client";
 import Image from "next/image";
 export default function CarouselItem({ title, description, img, author }: any) {
   return (
-    <div className="grid grid-cols-3 gap-1 items-center h-full w-full">
+    <div className="grid grid-cols-3 gap-1 items-center h-full w-full absolute  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 z-10">
       <div className="col-span-1  h-full w-full p-0 m-0 flex flex-col items-center justify-center">
         <Image
           className="rounded-lg w-[108px] h-[161px] lg:w-[240px] lg:h-[320px] sm:w-[176px] sm:h-[263px]"
