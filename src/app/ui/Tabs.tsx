@@ -90,13 +90,7 @@ export default function FullWidthTabs({ description, novel_id }: any) {
         </Tabs.Item>
 
         <Tabs.Item title="Comments" icon={HiClipboardList}>
-          This is{" "}
-          <span className="font-medium text-gray-800 dark:text-white">
-            Contacts tab's associated content
-          </span>
-          . Clicking another tab will toggle the visibility of this one for the
-          next. The tab JavaScript swaps classes to control the content
-          visibility and styling.
+          In Progress
         </Tabs.Item>
       </Tabs>
     </div>

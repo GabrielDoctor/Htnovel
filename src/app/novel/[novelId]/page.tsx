@@ -107,11 +107,11 @@ export default async function Page({
   return (
     <div className=" m-auto flex flex-col gap-3 items-center justify-center h-full w-11/12 md:w-3/4 md:m-auto relative">
       <div className="flex flex-col justify-center items-center w-full relative">
-        <img
+        <Image
           className="absolute w-full h-full blur-md -z-10 right-0 top-0"
           src={novel.cover}
           alt="cover"
-        ></img>
+        ></Image>
         <Image
           className="rounded-lg w-40 h-56 sm:w-80 sm:h-full p-2"
           width={320}
