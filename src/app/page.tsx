@@ -54,7 +54,7 @@ export default function Home() {
               Random Novels
               <hr className="pb-4 border-t-2 dark:border-white border-black border-opacity-80 h-1 w-full bg-gradient-to-r from-transparent dark:from-transparent via-black dark:via-gray-700 to-transparent dark:to-transparent" />{" "}
             </Typography>
-            <div className="p-5 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-10 rounded-md border-2 border-black border-opacity-80 dark:border-slate-400 ">
+            <div className="p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-10 rounded-md border-2 border-black border-opacity-80 dark:border-slate-400 ">
               {randomBooks &&
                 randomBooks.map((book: any) => {
                   return (

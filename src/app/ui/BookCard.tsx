@@ -10,7 +10,7 @@ export default function BookCard({
 }: any) {
   return (
     <div className=" relative flex flex-col p-1 justify-center items-center border-black dark:border-white border-solid border-2 rounded-md hover:border-blue-500 transition duration-300 ease-in-out hover:shadow-lg">
-      <div className="absolute top-3 left-3  z-10 bg-slate-400 dark:bg-slate-800 border-2 border-black dark:border-white border-solid rounded-full px-3  ">
+      <div className="absolute top-3 left-3 text-xs sm:text-sm  z-10 bg-slate-400 dark:bg-slate-800 border-2 border-black dark:border-white border-solid rounded-full px-3  ">
         <VisibilityIcon /> {views}
       </div>
       {/* Link and Image */}

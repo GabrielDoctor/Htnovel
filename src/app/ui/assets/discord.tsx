@@ -10,7 +10,7 @@ export default function DiscordIcon() {
         strokeLinejoin="miter"
         strokeMiterlimit="10"
         strokeDasharray=""
-        stroke-Dashoffset="0"
+        strokeDashoffset="0"
         fontFamily="none"
         fontWeight="none"
         fontSize="none"

@@ -109,6 +109,8 @@ export default async function Page({
       <div className="flex flex-col justify-center items-center w-full relative">
         <Image
           className="absolute w-full h-full blur-md -z-10 right-0 top-0"
+          width={1080}
+          height={1080}
           src={novel.cover}
           alt="cover"
         ></Image>
