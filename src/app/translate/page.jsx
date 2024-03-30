@@ -38,14 +38,14 @@ export default function Translate() {
     setText(e.target.value);
   };
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
+    <div className="flex flex-col justify-center items-center h-screen bg-white dark:bg-black">
       <textarea
         onChange={handleInput}
         value={text}
-        className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+        className="border dark:text-black dark:bg-slate-500 border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
         rows="15"
         cols={"80"}
-        placeholder="Enter multi-line text here..."
+        placeholder="Enter text need translate to Vietnamese  here..."
       />
       <button
         onClick={handleTranslate}
@@ -53,14 +53,22 @@ export default function Translate() {
       >
         Translate
       </button>
-      {translatedText && (
+      {translatedText ? (
         <textarea
           value={capitalizeAfterPunctuation(translatedText)}
-          className="border border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+          className="border dark:text-black dark:bg-slate-500 border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           rows="15"
           cols={"80"}
           readOnly
-          placeholder="Enter multi-line text here..."
+          placeholder="Text is translated..."
+        ></textarea>
+      ) : (
+        <textarea
+          className="border dark:text-black dark:bg-slate-500 border-gray-300 rounded-md p-2 shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+          rows="15"
+          cols={"80"}
+          readOnly
+          placeholder="Text is translated..."
         ></textarea>
       )}
     </div>

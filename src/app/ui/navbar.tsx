@@ -49,9 +49,16 @@ export default function Navbar() {
           </IconButton>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href={"/"}>LNnovel</Link>
+            <Link className="font-bold " href={"/"}>
+              LNnovel
+            </Link>
           </Typography>
-          <Link href={"/translate"}>CV Vietnamese</Link>
+          <Link
+            className="font-bold rounded-md border-2 border-solid p-2  "
+            href={"/translate"}
+          >
+            CV Vietnamese
+          </Link>
           <ToggleThemeBtn />
           {auth?.userData?.name === "Guest" || !auth?.userData ? (
             <Link
