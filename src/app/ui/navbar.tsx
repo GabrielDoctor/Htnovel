@@ -51,6 +51,7 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href={"/"}>LNnovel</Link>
           </Typography>
+          <Link href={"/translate"}>CV Vietnamese</Link>
           <ToggleThemeBtn />
           {auth?.userData?.name === "Guest" || !auth?.userData ? (
             <Link
