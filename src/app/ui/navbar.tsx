@@ -7,9 +7,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { HiCheck } from "react-icons/hi";
 import Switch, { SwitchProps } from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "next/link";
+import Cookie from "js-cookie";
 import { useAuth } from "./contexts/AuthContext";
 import { styled } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
@@ -17,9 +19,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import SearchBar from "./SearchBar";
 import { ToggleThemeBtn } from "./parts/ToggleThemeBtn";
+import { Toast } from "flowbite-react";
 export default function Navbar() {
   const auth = useAuth();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [logout, setLogout] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -27,7 +31,20 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const handleLogout = async () => {
+    const logout = await fetch("/api/auth/logout", {
+      method: "GET",
+    });
+    const json = await logout.json();
+    if (json.Status === "Success") {
+      setLogout(true);
+    }
+    auth?.setUserData(null);
+    setTimeout(() => {
+      setLogout(false);
+    }, 2000);
+    handleClose();
+  };
   console.log(auth);
 
   //" centered-container max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl "
@@ -53,9 +70,18 @@ export default function Navbar() {
               LNnovel
             </Link>
           </Typography>
+          {auth?.userData?.role === "Admin" && (
+            <Link
+              className=" mx-3 inline-block text-center px-6 py-2 text-white bg-blue-500 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-95 active:bg-blue-700"
+              href={"/admin"}
+            >
+              Manage
+            </Link>
+          )}
+
           <Link
-            className="font-bold rounded-md border-2 border-solid p-2  "
-            href={"/translate"}
+            className="inline-block font-bold text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 active:bg-blue-700 rounded-md border border-transparent px-4 py-2 transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-95"
+            href="/translate"
           >
             CV Vietnamese
           </Link>
@@ -96,12 +122,21 @@ export default function Navbar() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>
           )}
         </Toolbar>
       </AppBar>
+      {logout && (
+        <Toast>
+          <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+            <HiCheck className="h-5 w-5" />
+          </div>
+          <div className="ml-3 text-sm font-normal">Logout successfully.</div>
+          <Toast.Toggle />
+        </Toast>
+      )}
     </Box>
   );
 }

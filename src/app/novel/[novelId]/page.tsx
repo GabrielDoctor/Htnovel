@@ -95,6 +95,17 @@ export default async function Page({
   params: { novelId: string };
 }) {
   const novel: any = await getNovelInfo(params.novelId);
+  let cover = novel.cover;
+  try {
+    const imgCheck = await fetch(novel.cover, {
+      method: "HEAD",
+    });
+    if (!imgCheck.ok) {
+      cover = "http://img.wenku8.com/image/3/3632/3632s.jpg";
+    }
+  } catch (error) {
+    cover = "http://img.wenku8.com/image/3/3632/3632s.jpg";
+  }
 
   const sameAuthorNovel = await getSameNovelInfo(novel.author_id);
   const latestChapters = await getLatestChapters(params.novelId);
@@ -111,14 +122,14 @@ export default async function Page({
           className="absolute w-full h-full blur-md -z-10 right-0 top-0"
           width={1080}
           height={1080}
-          src={novel.cover}
+          src={cover}
           alt="cover"
         ></Image>
         <Image
           className="rounded-lg w-40 h-56 sm:w-80 sm:h-full p-2"
           width={320}
           height={480}
-          src={novel.cover}
+          src={cover}
           alt="cover"
           priority
         ></Image>
