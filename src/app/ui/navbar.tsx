@@ -20,10 +20,14 @@ import Avatar from "@mui/material/Avatar";
 import SearchBar from "./SearchBar";
 import { ToggleThemeBtn } from "./parts/ToggleThemeBtn";
 import { Toast } from "flowbite-react";
+import { Popover, Label } from "flowbite-react";
+import ToolBox from "./parts/ToolBox";
+import { ZhProvider } from "./contexts/ToolBoxContext";
 export default function Navbar() {
   const auth = useAuth();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [logout, setLogout] = React.useState(false);
+  const [toolBoxOpen, setToolBoxOpen] = React.useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +49,6 @@ export default function Navbar() {
     }, 2000);
     handleClose();
   };
-  console.log(auth);
 
   //" centered-container max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl "
   return (
@@ -70,6 +73,35 @@ export default function Navbar() {
               LNnovel
             </Link>
           </Typography>
+          <Popover
+            aria-labelledby="area-popover"
+            open={toolBoxOpen}
+            onOpenChange={setToolBoxOpen}
+            content={<ToolBox />}
+          >
+            <Button
+              className="!bg-white  !mx-3"
+              onClick={() => setToolBoxOpen(!toolBoxOpen)}
+            >
+              <svg
+                className="w-6 h-6 !text-gray-800 !dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                />
+              </svg>
+            </Button>
+          </Popover>
           {auth?.userData?.role === "Admin" && (
             <Link
               className=" mx-3 inline-block text-center px-6 py-2 text-white bg-blue-500 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-opacity-50 rounded transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-95 active:bg-blue-700"

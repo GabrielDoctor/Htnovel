@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import BookCard from "./ui/BookCard";
 import Skeleton from "@mui/material/Skeleton";
 import MyCarousel from "./ui/MyCarousel";
+
+import Test from "./ui/Test";
 export default function Home() {
   const [booklists, setBooklists] = useState([]);
   const [randomBooks, setRandomBooks] = useState([]);

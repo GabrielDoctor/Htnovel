@@ -41,3 +41,13 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+/* Tailwind CSS */
+.input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #4f46e5; /* A nice shade of indigo */
+}
+
+.input:checked ~ .block {
+  background-color: #a5b4fc; /* A lighter shade of indigo */
+}

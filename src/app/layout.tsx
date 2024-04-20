@@ -7,6 +7,7 @@ import Navbar from "@/app/ui/navbar";
 import { Typography, Link } from "@mui/material";
 import { AuthProvider } from "./ui/contexts/AuthContext";
 import DiscordIcon from "@/app/ui/assets/discord";
+import { ZhProvider } from "./ui/contexts/ToolBoxContext";
 const inter = Inter({ subsets: ["latin"] });
 
 import Script from "next/script";
@@ -48,16 +49,18 @@ export default function RootLayout({
             data-website-id="049fd73a-0c94-4b77-8191-a0617948210c"
           ></Script>
           <AuthProvider>
-            <Navbar />
+            <ZhProvider>
+              <Navbar />
 
-            {children}
+              {children}
+            </ZhProvider>
           </AuthProvider>
           <Copyright
             className="dark:!text-white"
             component="footer"
             sx={{ mt: 8, mb: 4 }}
           />
-          <div className="flex flex-row justify-center items-center mb-1 ">
+          {/* <div className="flex flex-row justify-center items-center mb-1 ">
             <Typography variant="body1" color="initial">
               Contact:{"   "}
             </Typography>
@@ -68,7 +71,7 @@ export default function RootLayout({
               <DiscordIcon />{" "}
               <Typography variant="subtitle1">Discord</Typography>
             </Link>
-          </div>
+          </div> */}
         </AppRouterCacheProvider>
       </body>
     </html>

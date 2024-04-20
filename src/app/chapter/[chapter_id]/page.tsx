@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Button } from "flowbite-react";
 import { HiOutlineArrowRight, HiOutlineArrowLeft } from "react-icons/hi";
 import ChapterContent from "@/app/ui/ChapterContent";
+import { Children } from "react";
+import { cookies } from "next/headers";
+import MT1 from "@/app/ui/TranUI/MT1";
 
 async function getChapterInfo(chapter_id: string) {
   try {
@@ -41,14 +44,14 @@ export default async function Page({
   params: { chapter_id: string };
 }) {
   const { chapter_id } = params;
+  const option = cookies().get("TransOptions");
   const { chapterInfo, content, preChapterId, nextChapterId } =
     (await getChapterInfo(chapter_id)) || {};
 
   return (
     <div className="flex flex-col justify-center items-center w-3/4 m-auto">
-      <div>
-        <ChapterContent title={chapterInfo?.chapter_title} content={content} />
-      </div>
+      <h1>{chapterInfo?.chapter_title}</h1>
+      <MT1 chapter_id={chapter_id} />
       <div className="flex flex-row justify-center items-center gap-5 m-5">
         <Link href={`/chapter/${preChapterId}`}>
           <Button
