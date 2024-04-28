@@ -8,7 +8,7 @@ const getAllZhInLine = (span: HTMLSpanElement) => {
   if (!span) return null;
   let tokens: string[] = [];
   getAllTokenInLine(span)?.forEach((token) => {
-    let toks = token.getAttribute("zh")?.split("");
+    let toks = token.getAttribute("data-zh")?.split("");
     if (toks) tokens = [...tokens, ...toks];
   });
 

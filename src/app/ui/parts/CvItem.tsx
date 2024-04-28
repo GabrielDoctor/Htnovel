@@ -34,8 +34,8 @@ export default function CvItem({
       {vi && (
         <span
           // ref={itemRef}
-          zh={zh}
-          pos={pos}
+          data-zh={zh}
+          data-pos={pos}
           className="font-bold relative cursor-pointer"
           onClick={handleClick}
         >
