@@ -84,9 +84,9 @@ export default function EnTab({ words }: { words: string }) {
               {wordsInfo?.kind &&
                 JSON.parse(wordsInfo?.kind)
                   .map((k: string) => {
-                    return kinds[k] ?? "N/A";
+                    return kinds[k as keyof typeof kinds] ?? "N/A";
                   })
-                  ?.join(", ")}
+                  .join(", ")}
             </dd>
           </div>
 
