@@ -19,7 +19,6 @@ export function ZhProvider({ children }: any) {
     }
   }, [data]);
 
-  // Value to be provided to context consumers
   const value = { data, setData };
 
   return <ZhContext.Provider value={value}>{children}</ZhContext.Provider>;

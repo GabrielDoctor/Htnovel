@@ -66,7 +66,7 @@ export default function RootLayout({
             </Typography>
             <Link
               className="bg-sky-900 hover:bg-sky-700 flex flex-row justify-start items-center border-black border-2 rounded-lg px-2 "
-              href="https://discord.gg/DQkcPCTd"
+              href=""
             >
               <DiscordIcon />{" "}
               <Typography variant="subtitle1">Discord</Typography>

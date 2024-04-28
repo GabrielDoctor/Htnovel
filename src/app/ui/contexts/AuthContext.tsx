@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             role: "Guest",
           });
         }
-        console.log("Route: ");
+        //console.log("Route: ");
       } catch (err) {
         console.error(err);
       }
