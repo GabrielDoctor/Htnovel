@@ -33,12 +33,11 @@ async function getChapterInfo(chapter_id: string): Promise<ChapterData | null> {
     const nextChapterQuery = await sql`
       SELECT id FROM chapters WHERE novel_id = ${
         chapter.novel_id
-      } AND chapter_index = ${chapter.chapter_index + 1}`;
+      } AND chapter_index = ${Number(chapter.chapter_index) + 1}`;
     const preChapterQuery = await sql`
       SELECT id FROM chapters WHERE novel_id = ${
         chapter.novel_id
-      } AND chapter_index = ${chapter.chapter_index - 1}`;
-
+      } AND chapter_index = ${Number(chapter.chapter_index) - 1}`;
     const nextChapterId = nextChapterQuery.length
       ? nextChapterQuery[0].id
       : null;

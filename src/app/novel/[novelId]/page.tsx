@@ -173,40 +173,33 @@ export default async function Page({
           Like
         </Button>
       </div>
-      <div className="flex flex-row justify-center items-center gap-3 h-18 w-full p-2">
+      <div className="flex flex-wrap justify-center items-center gap-4 px-2 py-2 sm:gap-6 sm:px-4 sm:py-4">
         {bookStatus.map(([label, value]) => (
           <div
             key={label}
-            className="flex flex-col justify-center items-center gap-1 w-full md:w-1/3 lg:w-1/4 xl:w-1/5 border-2 rounded-lg p-4 bg-rose-600 dark:bg-rose-900 dark:border-gray-700 hover:bg-rose-700 dark:hover:bg-rose-800 transition ease-in-out duration-300 shadow-lg dark:shadow-md hover:shadow-xl dark:hover:shadow-lg text-center"
+            className="flex flex-col items-center justify-center gap-2 w-1/5 sm:w-1/5  md:w-auto h-32  p-3 sm:p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-xl transform transition duration-300 ease-in-out hover:scale-105 sm:hover:scale-110 hover:-rotate-1 sm:hover:rotate-2"
           >
-            <Typography
-              sx={{ fontWeight: "bold", flexShrink: 0 }}
-              variant="body1"
-              className="text-xl text-white dark:text-gray-200"
-            >
+            <span className="text-lg sm:text-xl font-bold text-white">
               {value}
-            </Typography>
-            <Typography
-              sx={{ fontWeight: "bold" }}
-              variant="body1"
-              className="text-sm text-gray-900 dark:text-gray-300"
-            >
+            </span>
+            <span className="text-sm sm:text-lg font-medium text-white">
               {label}
-            </Typography>
+            </span>
           </div>
         ))}
       </div>
-      <div className="flex flex-row justify-center items-center gap-3 h-18 w-full flex-wrap">
-        <Typography variant="h4">Tags:</Typography>
+      <div className="flex flex-wrap items-center justify-center gap-3 h-18 w-full p-2">
+        <h4 className="font-bold text-lg sm:text-xl">Tags:</h4>
         {novel.tags.map((tag: any) => (
-          <Button key={tag} sx={{ borderRadius: "20px" }} variant="contained">
-            <Typography sx={{ fontWeight: "bold", flexShrink: 2 }}>
-              {tag}
-            </Typography>
-          </Button>
+          <button
+            key={tag}
+            className="py-2 px-4 rounded-full bg-blue-500 text-white font-bold text-sm sm:text-base hover:bg-blue-600 transition-colors duration-300 ease-in-out"
+          >
+            {tag}
+          </button>
         ))}
       </div>
-      <div className="flex flex-col justify-start items-center gap-3 w-full">
+      {/* <div className="flex flex-col justify-start items-center gap-3 w-full">
         <Typography
           className="border-1 p-1 rounded-lg  bg-slate-500 px-4"
           sx={{ fontWeight: "bold" }}
@@ -248,7 +241,7 @@ export default async function Page({
               </div>
             ))}
         </div>
-      </div>
+      </div> */}
       <div className="w-full">
         <FullWidthTabs
           description={novel.description_text}
