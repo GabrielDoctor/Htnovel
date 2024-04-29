@@ -20,6 +20,7 @@ export default function CvItem({
   //const id = React.useMemo(() => `${pos}-${zh}`, [pos, zh]);
 
   const handleClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    event.stopPropagation();
     const rect = event.currentTarget.getBoundingClientRect();
     setToolbarPos({
       top: rect.top + window.scrollY,
@@ -36,7 +37,7 @@ export default function CvItem({
           // ref={itemRef}
           data-zh={zh}
           data-pos={pos}
-          className="font-bold relative cursor-pointer"
+          className="font-bold relative cursor-pointer hover:underline"
           onClick={handleClick}
         >
           {`${vi} `}

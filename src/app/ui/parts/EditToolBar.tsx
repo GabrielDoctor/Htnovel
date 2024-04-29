@@ -51,7 +51,7 @@ export default function EditToolBar() {
     e.stopPropagation();
     setOpenLookupBar((prev) => !prev);
   };
-  if (!HtmlNodes) return null;
+  if (!HtmlNodes || toolbarPos.top === 0) return null;
 
   return (
     <div
