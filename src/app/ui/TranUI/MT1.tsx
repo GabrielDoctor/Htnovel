@@ -40,7 +40,6 @@ export default function MT1({ chapter_id }: { chapter_id: string }) {
 
   return (
     <div onClick={handleClick}>
-      {JSON.stringify(toolbarPos)}
       <LookupBar />
       {!openLookupBar && toolbarPos.top !== 0 && <EditToolBar />}
       {Tokens !== null &&
