@@ -24,7 +24,7 @@ export default function EnTab({ words }: { words: string }) {
       </div>
       <div className="border-t border-gray-600">
         <dl>
-          <div className="bg-gray-600 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className="bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-300">Pinyin</dt>
             <dd className="mt-1 text-sm text-gray-300 sm:mt-0 sm:col-span-2">
               {wordsInfo?.pinyin ?? "N/A"}
@@ -37,7 +37,7 @@ export default function EnTab({ words }: { words: string }) {
             </dd>
           </div>
 
-          <div className="bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className="bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-300">Kind: </dt>
             <dd className="mt-1 text-sm text-gray-300 sm:mt-0 sm:col-span-2">
               {wordsInfo?.kind &&
@@ -87,7 +87,7 @@ export default function EnTab({ words }: { words: string }) {
               </ol>
             </dd>
           </div>
-          <div className="bg-gray-600 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className="bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-300">Anto: </dt>
             <dd className="mt-1 text-sm text-gray-300 sm:mt-0 sm:col-span-2">
               <div>{wordsInfo?.snym?.anto?.join(", ") ?? "N/A"}</div>

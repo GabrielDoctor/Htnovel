@@ -56,9 +56,9 @@ export default function EnTab({ words }: { words: string }) {
           Word: {wordsInfo?.word ?? "N/A"}
         </h1>
       </div>
-      <div className="border-t border-gray-600">
+      <div className="border-t border-gray-700">
         <dl>
-          <div className="bg-gray-600 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className="bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-300">Pinyin</dt>
             <dd className="mt-1 text-sm text-gray-300 sm:mt-0 sm:col-span-2">
               {wordsInfo?.pinyin ?? "N/A"}
@@ -70,7 +70,7 @@ export default function EnTab({ words }: { words: string }) {
               {wordsInfo?.phonetic ?? "N/A"}
             </dd>
           </div>
-          <div className="bg-gray-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className="bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-300">Hán việt</dt>
             <dd className="mt-1 text-sm text-gray-300 sm:mt-0 sm:col-span-2">
               {typeof wordsInfo?.cn_vi === "string"
@@ -130,7 +130,7 @@ export default function EnTab({ words }: { words: string }) {
               </ol>
             </dd>
           </div>
-          <div className="bg-gray-600 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <div className="bg-gray-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-300">
               Tu dong nghia:{" "}
             </dt>

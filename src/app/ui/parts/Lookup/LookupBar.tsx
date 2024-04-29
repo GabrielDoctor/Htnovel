@@ -23,9 +23,9 @@ const LookupBar = () => {
       }}
       className={`fixed top-0 right-0 h-full  bg-gray-700 dark:bg-gray-900 overflow-x-hidden transition-transform duration-500 ${
         openLookupBar ? "translate-x-0" : "translate-x-full"
-      } w-3/4 md:w-1/3 z-50 opacity-100`}
+      } w-4/5 md:w-1/3 z-50 opacity-100`}
     >
-      <div className="flex flex-col justify-center items-center w-full p-6">
+      <div className="flex flex-col justify-center items-center w-full p-2 md:p-6">
         <header className="flex flex-row justify-between items-center w-full h-full ">
           <h1 className="text-3xl font-bold text-white">Lookup</h1>
           <button onClick={() => setOpenLookupBar(false)}>X</button>
@@ -35,8 +35,8 @@ const LookupBar = () => {
           <ZhLine zhToks={zhToks} setZhToks={setZhToks} firstNode={firstNode} />
         </section>
         <div>Keyword: {zhToks.map((tok) => tok.textContent).join("")}</div>
-        <div className="bg-gray-800 p-4 w-full h-full rounded-lg">
-          <div className="flex flex-row justify-around items-center border-b border-gray-500 py-2 bg-gray-800 shadow-sm">
+        <div className="bg-gray-800 p-1 md:p-4 w-full h-full rounded-lg">
+          <div className="flex flex-row justify-around items-center border-b border-gray-500 py-1 md:py-2  bg-gray-800 shadow-sm overflow-scroll">
             <button
               onClick={() => setActiveTab(0)}
               className={`px-6 py-2 text-xl rounded-md font-bold cursor-pointer transition duration-300 ease-in-out ${
