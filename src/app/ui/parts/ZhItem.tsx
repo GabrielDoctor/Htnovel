@@ -10,7 +10,7 @@ export default function ZhItem({
   return (
     <>
       {zh && (
-        <span zh={zh} vi={vi} pos={pos} className="font-bold">
+        <span data-zh={zh} data-vi={vi} data-pos={pos} className="font-bold">
           {`${zh} `}
         </span>
       )}

@@ -4,11 +4,19 @@ import CVline from "../parts/CvLine";
 import EditToolBar from "../parts/EditToolBar";
 import LookupBar from "../parts/Lookup/LookupBar";
 import { EditBoxContext } from "../contexts/EditBoxContext";
+import { clearAllLineFocusStyle } from "@/utils/utils";
 
 export default function MT1({ chapter_id }: { chapter_id: string }) {
   const [Tokens, setTokens] = useState<string | null>(null);
-  const { openLookupBar, setOpenLookupBar, toolbarPos, setToolbarPos } =
-    useContext(EditBoxContext);
+  const {
+    openLookupBar,
+    setOpenLookupBar,
+    toolbarPos,
+    setToolbarPos,
+    HtmlNodes,
+    setHtmlNodes,
+    setFirstNode,
+  } = useContext(EditBoxContext);
 
   // Function to fetch tokens
   const fetchTokens = async (chapter_id: string) => {
@@ -36,16 +44,21 @@ export default function MT1({ chapter_id }: { chapter_id: string }) {
   const handleClick = () => {
     setOpenLookupBar(false);
     setToolbarPos({ top: 0, left: 0 });
+    if (HtmlNodes) clearAllLineFocusStyle(HtmlNodes);
+    setHtmlNodes(undefined);
+    setFirstNode(undefined);
   };
 
   return (
-    <div onClick={handleClick}>
-      <LookupBar />
-      {!openLookupBar && toolbarPos.top !== 0 && <EditToolBar />}
-      {Tokens !== null &&
-        Tokens.split("\n").map((token, index) => (
-          <CVline key={index} line={token} />
-        ))}
+    <div className="w-full" onClick={handleClick}>
+      <div className=" w-10/12 md:w-3/4 m-auto">
+        <LookupBar />
+        {!openLookupBar && toolbarPos.top !== 0 && <EditToolBar />}
+        {Tokens !== null &&
+          Tokens.split("\n").map((token, index) => (
+            <CVline key={index} line={token} />
+          ))}
+      </div>
     </div>
   );
 }

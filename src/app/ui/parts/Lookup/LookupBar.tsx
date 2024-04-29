@@ -13,8 +13,13 @@ const LookupBar = () => {
   const [zhToks, setZhToks] = React.useState<HTMLSpanElement[]>([]);
   const [lookupData, setLookupData] = React.useState<any[]>([]);
   const [activeTab, setActiveTab] = React.useState<number>(0);
-  const { openLookupBar, setOpenLookupBar, firstNode } =
-    React.useContext(EditBoxContext);
+  const {
+    openLookupBar,
+    setOpenLookupBar,
+    firstNode,
+    setFirstNode,
+    setToolbarPos,
+  } = React.useContext(EditBoxContext);
 
   return (
     <div
@@ -28,7 +33,16 @@ const LookupBar = () => {
       <div className="flex flex-col justify-center items-center w-full p-2 md:p-6">
         <header className="flex flex-row justify-between items-center w-full h-full ">
           <h1 className="text-3xl font-bold text-white">Lookup</h1>
-          <button onClick={() => setOpenLookupBar(false)}>X</button>
+          <button
+            onClick={() => {
+              setOpenLookupBar(false);
+              setZhToks([]);
+              setFirstNode(undefined);
+              setToolbarPos({ top: 0, left: 0 });
+            }}
+          >
+            X
+          </button>
         </header>
         <section>
           <h1 className="text-2xl font-bold text-white">Chinese</h1>

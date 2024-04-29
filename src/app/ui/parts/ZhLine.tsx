@@ -46,7 +46,7 @@ export default function ZhLine({
   };
   return (
     <div className="flex flex-col justify-between items-center w-full h-full px-4 py-2">
-      <div className="bg-gray-800 rounded-md p-2 text-white">
+      <div className="bg-gray-800 rounded-md p-2">
         {firstNode &&
           getAllZhInLine(firstNode)?.map((tok, index) => (
             <span

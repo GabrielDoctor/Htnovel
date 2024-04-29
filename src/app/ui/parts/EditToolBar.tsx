@@ -21,6 +21,7 @@ export default function EditToolBar() {
   const handleNavigateLeft: React.MouseEventHandler<HTMLButtonElement> = (
     e
   ) => {
+    e.stopPropagation();
     setHtmlNodes((prev) => {
       if (prev && prev.length >= 1) {
         const previousElement = prev[0].previousElementSibling;
@@ -33,9 +34,10 @@ export default function EditToolBar() {
     });
   };
 
-  const handleNavigateRight: React.MouseEventHandler<
-    HTMLButtonElement
-  > = () => {
+  const handleNavigateRight: React.MouseEventHandler<HTMLButtonElement> = (
+    e
+  ) => {
+    e.stopPropagation();
     setHtmlNodes((prev) => {
       if (prev && prev.length >= 1) {
         const nextElement = prev[prev.length - 1].nextElementSibling;

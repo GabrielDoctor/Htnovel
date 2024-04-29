@@ -73,8 +73,8 @@ export default async function Page({ params }: PageProps) {
   const { chapterInfo, content, preChapterId, nextChapterId } = chapterData;
 
   return (
-    <div className="flex flex-col justify-center items-center w-3/4 m-auto">
-      <h1>{chapterInfo.chapter_title}</h1>
+    <div className="flex flex-col justify-center items-center w-full m-auto">
+      <h1 className="text-3xl font-bold ">{chapterInfo.chapter_title}</h1>
       <EditBoxProvider>
         <MT1 chapter_id={chapter_id} />
       </EditBoxProvider>
