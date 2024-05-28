@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     originalKey = bytes.toString(CryptoJS.enc.Utf8);
   }
   try {
-    const res = await fetch("http://127.0.0.1:5000/translate", {
+    const res = await fetch("http://127.0.0.1:5002/translate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

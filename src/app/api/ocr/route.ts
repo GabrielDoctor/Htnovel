@@ -3,7 +3,7 @@ export async function POST(request: NextRequest) {
   const formData = await request.formData();
   try {
     console.log(formData.get("image"));
-    const response = await fetch("http://localhost:5000/extract-text", {
+    const response = await fetch("http://localhost:5001/extract-text", {
       method: "POST",
       body: formData,
     });
