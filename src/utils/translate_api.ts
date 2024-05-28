@@ -48,26 +48,6 @@ async function translateBing(
   return trans_doc;
 }
 
-// async function translateBaidu(
-//   originalString: string,
-//   from: string = "auto",
-//   to: string = "vie"
-// ) {
-//   to = languages_baidu[languages_google[to]] || to;
-//   const res = await fetch(`http://localhost:3000/api/translate/baidu`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       from: from,
-//       to: to,
-//       text: originalString,
-//     }),
-//   });
-//   const data = await res.text();
-//   return data;
-// }
 function getAllTranslationsGoogle(data: any) {
   return data[0].map((item: any) => item[0]);
 }
@@ -76,10 +56,6 @@ export async function translateGoogle(
   from: String = "auto",
   to: String = "vi"
 ) {
-  // const lines = originalString.split("\n");
-  // const result: string[] = [];
-  // for (let line of lines) {
-  // let str = "";
   const res = await fetch(
     `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${to}&dt=t&q=${originalString}`,
     {
@@ -89,12 +65,7 @@ export async function translateGoogle(
   setTimeout(() => {}, 1000);
   const data = await res.json();
   const translations = getAllTranslationsGoogle(data);
-  //   for (const sentence of data[0]) {
-  //     console.log(sentence[0]);
-  //   }
-  //   result.push(str);
-  // }
-  // console.log(result);
+
   return translations.join("\n");
 }
 
