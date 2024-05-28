@@ -1,7 +1,27 @@
 import { TransOption } from "@/app/ui/contexts/SettingContext";
 import { languages_google, languages_baidu } from "@/app/ui/parts/SettingModel";
+const googleToBaiduMap = {
+  Automatic: "Auto",
+  Afrikaans: "af",
+  Albanian: "sq",
+  Amharic: "am",
+  Arabic: "ara",
+  Armenian: "hy",
+  English: "en",
+  Azerbaijani: "az",
+  Basque: "eu",
+  Belarusian: "be",
+  Bengali: "bn",
+  Vietnamese: "vie",
+  "Chinese Simplified": "zh",
+  "Chinese Traditional": "cht",
+};
 
-async function translateBing(originalString, from = "", to = "vi") {
+async function translateBing(
+  originalString: String,
+  from: String = "",
+  to: String = "vi"
+) {
   let trans_doc;
   let auth_res = await fetch("https://edge.microsoft.com/translate/auth");
   if (auth_res.ok) {
@@ -48,11 +68,13 @@ async function translateBing(originalString, from = "", to = "vi") {
 //   const data = await res.text();
 //   return data;
 // }
-
+function getAllTranslationsGoogle(data: any) {
+  return data[0].map((item: any) => item[0]);
+}
 export async function translateGoogle(
-  originalString,
-  from = "auto",
-  to = "vi"
+  originalString: string,
+  from: String = "auto",
+  to: String = "vi"
 ) {
   // const lines = originalString.split("\n");
   // const result: string[] = [];
@@ -76,7 +98,11 @@ export async function translateGoogle(
   return translations.join("\n");
 }
 
-async function translateGpt(originalString, from = "auto", to = "vi") {
+async function translateGpt(
+  originalString: string,
+  from: string = "auto",
+  to: string = "vi"
+) {
   const res = await fetch(`/api/translate/gpt`, {
     method: "POST",
     headers: {
@@ -84,7 +110,7 @@ async function translateGpt(originalString, from = "auto", to = "vi") {
     },
     body: JSON.stringify({
       from: from,
-      to: languages_google[to] || "vietnamese",
+      to: to || "vietnamese",
       text: originalString,
     }),
   });
@@ -92,8 +118,13 @@ async function translateGpt(originalString, from = "auto", to = "vi") {
   return data.translated_text;
 }
 
-async function translateBaidu(originalString, from = "zh", to = "en") {
-  to = googleToBaiduMap[to] || to;
+async function translateBaidu(
+  originalString: string,
+  from: string = "zh",
+  to: string = "en"
+) {
+  //@ts-ignore
+  to = languages_baidu[languages_google[to]] || to;
   let a = await fetch(
     "https://cors.moldich.eu.org/?q=https://fanyi.baidu.com/ait/text/translate",
     {
@@ -112,10 +143,10 @@ async function translateBaidu(originalString, from = "zh", to = "en") {
   );
   let e = await a.text();
   return getTranslatingJson(e.split("\n"))
-    .data.list.map((t) => t.dst)
+    .data.list.map((t: any) => t.dst)
     .join("\n");
 }
-function getTranslatingJson(t) {
+function getTranslatingJson(t: string[]) {
   for (let n = 0; n < t.length; n++)
     if (
       t[n].includes("event: message") &&
@@ -127,7 +158,7 @@ function getTranslatingJson(t) {
   return null;
 }
 
-async function translateSTV(originalString) {
+async function translateSTV(originalString: string) {
   const res = await fetch(`/api/translate/stv`, {
     method: "POST",
     headers: {
@@ -141,7 +172,7 @@ async function translateSTV(originalString) {
   return data;
 }
 
-async function translateGptChivi(originalString) {
+async function translateGptChivi(originalString: string) {
   const res = await fetch(`/api/translate/gpt_chivi`, {
     method: "POST",
     headers: {
@@ -156,11 +187,11 @@ async function translateGptChivi(originalString) {
 }
 
 export async function translate(
-  originalString,
-  to = "",
-  from = "",
-  option = TransOption.Bing
-) {
+  originalString: string,
+  to: string = "",
+  from: string = "",
+  option: TransOption = TransOption.Bing
+): Promise<string | undefined> {
   switch (option) {
     case TransOption.Bing:
       return translateBing(originalString, from, to);
