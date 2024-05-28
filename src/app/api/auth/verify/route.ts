@@ -2,82 +2,97 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { verifyToken, createToken } from "@/lib/utils";
 import sql from "@/lib/db";
-import { use } from "react";
 
-type DecodedToken = {
+interface DecodedToken {
   id: string;
-  email: string;
-  userName: string;
+  user_name: string;
   iat: number;
   exp: number;
-};
+}
 
 async function verifyAndRefreshToken(request: NextRequest) {
-  const accessToken = request.cookies.get("AccessToken")?.value;
-  const refreshToken = request.cookies.get("RefreshToken")?.value;
-  if (!accessToken || !refreshToken) return { valid: false };
+  const accessToken = request.cookies.get("ACCESS_TOKEN")?.value;
+  const refreshToken = request.cookies.get("REFRESH_TOKEN")?.value;
 
-  const decodedAccessToken = verifyToken(accessToken, "ACCESS_TOKEN");
-  const decodedRefreshToken = verifyToken(refreshToken, "REFRESH_TOKEN");
-  if (!decodedAccessToken || !decodedAccessToken.decoded?.id) {
-    if (!decodedRefreshToken || !decodedRefreshToken.decoded?.id)
-      return { valid: false };
+  if (!accessToken || !refreshToken)
+    return { valid: false, user: null, accessToken: "" };
 
-    const refreshTokenDB = await sql`
-      SELECT * FROM refresh_tokens WHERE token = ${refreshToken} AND user_id = ${decodedRefreshToken?.decoded?.id}
-    `;
-
-    if (refreshTokenDB.count === 0) return { valid: false };
-
-    if (decodedRefreshToken.valid && !decodedRefreshToken.expired) {
-      const newAccessToken = createToken(
-        decodedRefreshToken.decoded?.id,
-        decodedRefreshToken?.decoded?.email,
-        decodedRefreshToken?.decoded?.userName,
-        decodedRefreshToken?.decoded?.role,
-        decodedRefreshToken?.decoded?.avatar,
-        process.env.ACCESS_TOKEN_SECRET || "",
-        1000 * 60 * 60 * 24 // 1 day
-      );
-
-      return {
-        valid: true,
-        user: decodedRefreshToken,
-        accessToken: newAccessToken,
-      };
-    }
+  let decodedAccessToken: any = null;
+  try {
+    decodedAccessToken = verifyToken(accessToken, "ACCESS_TOKEN");
+  } catch (error) {
+    console.log(error);
   }
 
-  return { valid: true, user: decodedAccessToken };
+  if (decodedAccessToken && decodedAccessToken.id) {
+    return { valid: true, user: decodedAccessToken, accessToken };
+  }
+
+  let decodedRefreshToken = null;
+  try {
+    decodedRefreshToken = verifyToken(refreshToken, "REFRESH_TOKEN");
+  } catch (error) {
+    console.log(error);
+    return { valid: false, user: null, accessToken: "" };
+  }
+
+  if (!decodedRefreshToken || !decodedRefreshToken.decoded.id) {
+    return { valid: false, user: null, accessToken: "" };
+  }
+  const refreshTokenDB = await sql`
+    SELECT * FROM refresh_tokens WHERE token = ${refreshToken} AND user_id = ${decodedRefreshToken.decoded.id}
+  `;
+
+  if (refreshTokenDB.count === 0) {
+    return { valid: false, user: null, accessToken: "" };
+  }
+
+  if (decodedRefreshToken.valid && !decodedRefreshToken.expired) {
+    const newAccessToken = createToken(
+      decodedRefreshToken.decoded.id,
+      process.env.ACCESS_TOKEN_SECRET || "",
+      "1h"
+    );
+    return {
+      valid: true,
+      user: decodedRefreshToken.decoded,
+      accessToken: newAccessToken,
+    };
+  }
+
+  return { valid: false, user: null, accessToken: "" };
 }
 
 export async function POST(request: NextRequest) {
   const { valid, user, accessToken } = await verifyAndRefreshToken(request);
   if (!valid) {
-    let res = new Response(
+    return new NextResponse(
       JSON.stringify({ Status: "Authentication failed" }),
       {
         status: 401,
+        headers: {
+          "Set-Cookie": `ACCESS_TOKEN=; path=/; SameSite=Strict; HttpOnly; Max-Age=0;REFRESH_TOKEN=; path=/; SameSite=Strict; HttpOnly; Max-Age=0`,
+          "Content-Type": "application/json",
+        },
       }
-    );
-    res.headers.set(
-      "Set-Cookie",
-      `ACCESS_TOKEN=;SameSite=strict;Path=/;Secure;HttpOnly`
     );
   }
 
-  const response = new Response(
-    JSON.stringify({ Status: "Success", User: user?.decoded }),
+  const user_id = user?.id;
+  const user_data = await sql`
+    SELECT id, email, user_name, photo, role FROM users WHERE id = ${user_id}
+  `;
+
+  let response = new NextResponse(
+    JSON.stringify({ Status: "Success", User: user_data[0] }),
     {
       headers: {
         "Content-Type": "application/json",
+        "Set-Cookie": `ACCESS_TOKEN=${accessToken}; path=/; SameSite=Strict; Secure; HttpOnly; Max-Age=${
+          60 * 60
+        }`,
       },
     }
-  );
-
-  response.headers.set(
-    "Set-Cookie",
-    `ACCESS_TOKEN=${accessToken};SameSite=strict;Path=/;Secure;HttpOnly;Max-Age=1000; HttpOnly`
   );
 
   return response;

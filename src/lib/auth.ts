@@ -7,7 +7,7 @@ export interface User {
   user_name: string;
   password: string;
   email: string;
-  avatar: string;
+  photo: string;
   createAt: Date;
   updateAt: Date;
 }
@@ -19,5 +19,5 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function createUser(user: User) {
   const rs =
-    await sql`INSERT INTO users ( username, password, email) VALUES (${user.user_name}, ${user.password}, ${user.email}) RETURNING id, role, username, email, createAt, updateAt`;
+    await sql`INSERT INTO users ( username, password, email) VALUES (${user.user_name}, ${user.password}, ${user.email}) RETURNING id, role, user_name, email,photo`;
 }

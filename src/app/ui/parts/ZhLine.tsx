@@ -50,7 +50,7 @@ export default function ZhLine({
         {firstNode &&
           getAllZhInLine(firstNode)?.map((tok, index) => (
             <span
-              className="cursor-pointer hover:bg-red-400"
+              className="cursor-pointer hover:bg-red-400 text-white"
               key={index}
               onClick={(e) => {
                 clearAllLineFocusStyle(zhToks);

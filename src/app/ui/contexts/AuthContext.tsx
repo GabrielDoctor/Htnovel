@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState, createContext, useContext } from "react";
-import { usePathname } from "next/navigation";
 type UserData = {
   id: string;
-  name: string;
+  user_name: string;
   email: string;
-  avatar: string;
+  photo: string;
   role: string;
 };
 
@@ -14,13 +13,17 @@ type AuthContextType = {
   setUserData: React.Dispatch<React.SetStateAction<UserData | null>>;
 };
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+const initAuthContext: AuthContextType = {
+  userData: null,
+  setUserData: () => {},
+};
+
+export const AuthContext = createContext<AuthContextType>(initAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [userData, setUserData] = useState<UserData | null>(null);
-  const pathname = usePathname();
   useEffect(() => {
     const verify = async () => {
       try {
@@ -30,20 +33,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             "Content-Type": "application/json",
           },
         });
-        const json = await authResult.json();
 
-        if (json.Status === "Success") {
-          setUserData(json.User);
+        if (authResult.status === 200) {
+          const res = await authResult.json();
+          setUserData(res.User);
         } else {
           setUserData({
             id: "0",
-            name: "Guest",
+            user_name: "Guest",
             email: "example@gmail.com",
-            avatar: "",
+            photo: "",
             role: "Guest",
           });
         }
-        //console.log("Route: ");
       } catch (err) {
         console.error(err);
       }
@@ -51,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     verify();
     console.log("AuthContext: ", userData);
-  }, [pathname]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ userData, setUserData }}>

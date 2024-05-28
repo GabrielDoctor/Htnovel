@@ -5,7 +5,8 @@ import EditToolBar from "../parts/EditToolBar";
 import LookupBar from "../parts/Lookup/LookupBar";
 import { EditBoxContext } from "../contexts/EditBoxContext";
 import { clearAllLineFocusStyle } from "@/utils/utils";
-
+import { useSettings } from "../contexts/SettingContext";
+import { useThemeMode } from "../hooks/ThemeHook";
 export default function MT1({ chapter_id }: { chapter_id: string }) {
   const [Tokens, setTokens] = useState<string | null>(null);
   const {
@@ -17,7 +18,8 @@ export default function MT1({ chapter_id }: { chapter_id: string }) {
     setHtmlNodes,
     setFirstNode,
   } = useContext(EditBoxContext);
-
+  const { readingTheme } = useSettings();
+  const [theme, toggleTheme] = useThemeMode();
   // Function to fetch tokens
   const fetchTokens = async (chapter_id: string) => {
     try {
@@ -50,7 +52,19 @@ export default function MT1({ chapter_id }: { chapter_id: string }) {
   };
 
   return (
-    <div className="w-full" onClick={handleClick}>
+    <div
+      className={`w-full ${readingTheme.fontColor} ${
+        theme === "dark"
+          ? readingTheme.backgroundColor.dark
+          : readingTheme.backgroundColor.light
+      } ${readingTheme.fontFamily} ${readingTheme.lineHeight} ${
+        readingTheme.fontSize
+      }`}
+      style={{
+        fontFamily: readingTheme.fontFamily,
+      }}
+      onClick={handleClick}
+    >
       <div className=" w-10/12 md:w-3/4 m-auto">
         <LookupBar />
         {!openLookupBar && toolbarPos.top !== 0 && <EditToolBar />}

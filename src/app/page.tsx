@@ -1,12 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import CarouselItem from "./ui/CarouselItem";
-import Typography from "@mui/material/Typography";
 import BookCard from "./ui/BookCard";
 import Skeleton from "@mui/material/Skeleton";
-import MyCarousel from "./ui/MyCarousel";
-
-import Test from "./ui/Test";
+import Cookies from "js-cookie";
 export default function Home() {
   const [booklists, setBooklists] = useState([]);
   const [randomBooks, setRandomBooks] = useState([]);
@@ -48,15 +44,20 @@ export default function Home() {
     <main>
       {booklists.length > 0 && randomBooks.length > 0 ? (
         <>
-          <div className="m-6 w-4/5 lg:w-3/4 mx-auto border-black dark:border-white p-3 border-solid rounded-lg border-2">
-            <MyCarousel booklists={booklists} />
-          </div>
           <div className="m-6 max-w-6xl md:ml-10 md:mr-10 lg:ml-40 lg:mr-40">
-            <Typography variant="h4" component="h4">
-              Random Novels
-              <hr className="pb-4 border-t-2 dark:border-white border-black border-opacity-80 h-1 w-full bg-gradient-to-r from-transparent dark:from-transparent via-black dark:via-gray-700 to-transparent dark:to-transparent" />{" "}
-            </Typography>
-            <div className="p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-10 rounded-md border-2 border-black border-opacity-80 dark:border-slate-400 ">
+            <h2
+              style={{
+                fontSize: "1.875rem",
+                fontWeight: "bold",
+                textAlign: "center",
+                color: Cookies.get("theme") === "dark" ? "#ffffff" : "#000111",
+                animation: "fadeIn 1s ease-in-out forwards",
+              }}
+            >
+              Random novels
+            </h2>
+            <hr className="pb-4 border-t-2 dark:border-white border-black border-opacity-80 h-1 w-full bg-gradient-to-r from-transparent dark:from-transparent via-black dark:via-gray-700 to-transparent dark:to-transparent" />{" "}
+            <div className="p-5 dark:text-white text-black grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 lg:gap-10 rounded-md border-2 border-black border-opacity-80 dark:border-slate-400 ">
               {randomBooks &&
                 randomBooks.map((book: any) => {
                   return (
@@ -75,13 +76,6 @@ export default function Home() {
         </>
       ) : (
         <>
-          <Skeleton
-            className="w-4/5 m-auto rounded-lg mt-7 "
-            animation="wave"
-            variant="rounded"
-            width={1080}
-            height={360}
-          />
           <Skeleton
             className="w-4/5 m-auto rounded-lg mt-8 "
             animation="wave"

@@ -5,14 +5,27 @@ import { Button } from "flowbite-react";
 import { HiOutlineArrowRight, HiOutlineArrowLeft } from "react-icons/hi";
 import { cookies } from "next/headers";
 import MT1 from "@/app/ui/TranUI/MT1";
+// import MT from "@/app/ui/TranUI/MT";
 import { EditBoxProvider } from "@/app/ui/contexts/EditBoxContext";
+import React from "react";
+import dynamic from "next/dynamic";
+const ChapterNavigator = dynamic(() => import("@/app/ui/ChapterNavigator"), {
+  ssr: false,
+});
 
+const MT = dynamic(() => import("@/app/ui/TranUI/MT"), {
+  ssr: false,
+});
+
+const TranOptionBar = dynamic(() => import("@/app/ui/TranOptionBar"), {
+  ssr: false,
+});
 interface ChapterInfo {
   id: string;
   content_path: string;
   chapter_index: number;
   novel_id: string;
-  chapter_title?: string;
+  chapter_title: string;
 }
 
 interface ChapterData {
@@ -73,22 +86,17 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <div className="flex flex-col justify-center items-center w-full m-auto">
-      <h1 className="text-3xl font-bold ">{chapterInfo.chapter_title}</h1>
-      <EditBoxProvider>
+      <TranOptionBar />
+      {/* <EditBoxProvider>
         <MT1 chapter_id={chapter_id} />
+      </EditBoxProvider> */}
+      <EditBoxProvider>
+        <MT chapterTitle={chapterInfo.chapter_title} content={content} />
       </EditBoxProvider>
-      <div className="flex flex-row justify-center items-center gap-5 m-5">
-        <Link href={`/chapter/${preChapterId}`} passHref>
-          <Button disabled={!preChapterId}>
-            <HiOutlineArrowLeft className="w-6 h-6" />
-          </Button>
-        </Link>
-        <Link href={`/chapter/${nextChapterId}`} passHref>
-          <Button disabled={!nextChapterId}>
-            <HiOutlineArrowRight className="w-6 h-6" />
-          </Button>
-        </Link>
-      </div>
+      <ChapterNavigator
+        preChapterId={preChapterId}
+        nextChapterId={nextChapterId}
+      />
     </div>
   );
 }

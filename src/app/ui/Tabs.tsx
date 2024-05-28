@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { Tabs } from "flowbite-react";
+import Comments from "./Comments";
 import { HiAdjustments, HiClipboardList, HiUserCircle } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
 import ChapterList from "./ChapterList";
@@ -90,7 +91,7 @@ export default function FullWidthTabs({ description, novel_id }: any) {
         </Tabs.Item>
 
         <Tabs.Item title="Comments" icon={HiClipboardList}>
-          In Progress
+          <Comments novelId={novel_id} />
         </Tabs.Item>
       </Tabs>
     </div>

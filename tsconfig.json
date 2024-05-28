@@ -21,6 +21,13 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/ui/MyCarousel.jsx", "src/app/translate/page.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/app/ui/MyCarousel.jsx",
+    "src/app/translate/page.jsx"
+  ],
   "exclude": ["node_modules"]
 }

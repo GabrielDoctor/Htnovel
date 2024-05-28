@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FullWidthTabs from "@/app/ui/Tabs";
+import BookmarkBtn from "@/app/ui/parts/BookmarkBtn";
 
 type Novel = {
   id: string;
@@ -115,134 +116,74 @@ export default async function Page({
     ["Views", novel.views],
     ["Likes", 0],
   ];
+
   return (
-    <div className=" m-auto flex flex-col gap-3 items-center justify-center h-full w-11/12 md:w-3/4 md:m-auto relative">
-      <div className="flex flex-col justify-center items-center w-full relative">
+    <div className="mx-auto flex flex-col items-center justify-center min-h-screen w-11/12 md:w-3/4">
+      <div className="relative w-full">
         <Image
-          className="absolute w-full h-full blur-md -z-10 right-0 top-0"
+          className="absolute inset-0 w-full h-full object-cover blur-md -z-10"
           width={1080}
           height={1080}
           src={cover}
           alt="cover"
-        ></Image>
-        <Image
-          className="rounded-lg w-40 h-56 sm:w-80 sm:h-full p-2"
-          width={320}
-          height={480}
-          src={cover}
-          alt="cover"
-          priority
-        ></Image>
-      </div>
-      <Typography variant="h3">{novel.novel_name}</Typography>
-
-      <div className="flex flex-row justify-center items-center gap-3 h-8">
-        <div className="h-full w-6">
-          <AuthorIcon className="fill-black dark:fill-slate-100 h-full w-full" />
+        />
+        <div className="relative z-10 p-4 md:p-8">
+          <Image
+            className="rounded-lg shadow-lg"
+            width={320}
+            height={480}
+            src={cover}
+            alt="cover"
+            priority
+          />
         </div>
-        <Typography className="" variant="body1">
+      </div>
+      <h3 className="mt-4 text-4xl font-bold text-gray-800 dark:text-white">
+        {novel.novel_name}
+      </h3>
+      <div className="mt-2 flex items-center gap-2">
+        <AuthorIcon className="h-6 w-6 fill-current text-gray-700 dark:text-gray-300" />
+        <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
           {novel.author}
-        </Typography>
+        </p>
       </div>
-      <Button
-        sx={{ borderRadius: "20px" }}
-        color="secondary"
-        variant="contained"
-        className="flex flex-row justify-center items-center gap-3 h-10 w-full"
-      >
-        <EyeGlass className="fill-black dark:fill-slate-100 h-full w-6" />
-        <Typography sx={{ fontWeight: "bold", flexShrink: 2 }} variant="body1">
-          Read
-        </Typography>
-      </Button>
-      <div className="flex flex-row justify-center items-center gap-3 h-10 w-full">
-        <Button
-          sx={{ borderRadius: "20px", width: "50%" }}
-          variant="contained"
-          className="flex flex-row justify-center items-center gap-3 h-10 w-full"
-          startIcon={<BookmarksIcon />}
-        >
-          Bookmark
-        </Button>
-
-        <Button
-          sx={{ borderRadius: "20px", width: "50%" }}
-          variant="contained"
-          startIcon={<FavoriteBorderIcon />}
-        >
-          Like
-        </Button>
+      <div className="flex flex-row justify-center items-center mt-4 w-full">
+        <button className="w-full rounded-full bg-blue-600 py-3 px-6 text-white font-bold transition duration-300 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          <span>Start Reading</span>
+        </button>
       </div>
-      <div className="flex flex-wrap justify-center items-center gap-4 px-2 py-2 sm:gap-6 sm:px-4 sm:py-4">
+      <div className="mt-4 flex flex-row justify-center items-center w-full gap-4">
+        <BookmarkBtn novel_id={novel.id} />
+        <button className="flex flex-row justify-center items-center rounded-full bg-pink-500 py-3 px-6 text-white font-bold transition duration-300 ease-in-out hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
+          <FavoriteBorderIcon className="mr-2 h-6 w-6" />
+          <h3>Like</h3>
+        </button>
+      </div>
+      <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {bookStatus.map(([label, value]) => (
           <div
             key={label}
-            className="flex flex-col items-center justify-center gap-2 w-1/5 sm:w-1/5  md:w-auto h-32  p-3 sm:p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-xl transform transition duration-300 ease-in-out hover:scale-105 sm:hover:scale-110 hover:-rotate-1 sm:hover:rotate-2"
+            className="flex flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-700 p-4 shadow-xl transition duration-300 ease-in-out transform hover:scale-110"
           >
-            <span className="text-lg sm:text-xl font-bold text-white">
-              {value}
-            </span>
-            <span className="text-sm sm:text-lg font-medium text-white">
-              {label}
-            </span>
+            <span className="text-xl font-bold text-white">{value}</span>
+            <span className="text-base font-medium text-white">{label}</span>
           </div>
         ))}
       </div>
-      <div className="flex flex-wrap items-center justify-center gap-3 h-18 w-full p-2">
-        <h4 className="font-bold text-lg sm:text-xl">Tags:</h4>
-        {novel.tags.map((tag: any) => (
-          <button
+      <div className="mt-4 flex w-full flex-wrap items-center justify-center gap-2">
+        <h4 className="w-full text-center font-bold text-lg text-gray-800 dark:text-white">
+          Tags:
+        </h4>
+        {novel.tags.map((tag: string) => (
+          <span
             key={tag}
-            className="py-2 px-4 rounded-full bg-blue-500 text-white font-bold text-sm sm:text-base hover:bg-blue-600 transition-colors duration-300 ease-in-out"
+            className="rounded-full bg-indigo-500 px-4 py-1 text-sm text-white font-bold transition duration-300 ease-in-out hover:bg-indigo-600"
           >
             {tag}
-          </button>
+          </span>
         ))}
       </div>
-      {/* <div className="flex flex-col justify-start items-center gap-3 w-full">
-        <Typography
-          className="border-1 p-1 rounded-lg  bg-slate-500 px-4"
-          sx={{ fontWeight: "bold" }}
-          variant="h4"
-        >
-          Latest Chapters
-        </Typography>
-        <div className="flex flex-col justify-center items-center gap-1 w-full">
-          {latestChapters &&
-            latestChapters.map((item: latestChapterInfo) => (
-              <div
-                className="flex flex-col justify-between gap-2 w-full border-2 rounded-lg p-2 dark:bg-slate-700 border-gray-400   transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 shadow-lg hover:shadow-xl dark:border-amber-700"
-                key={item.chapter_id}
-              >
-                <div className="flex flex-row justify-between items-center gap-3 ">
-                  <Typography
-                    className="border-1 p-1 rounded-lg  bg-slate-500"
-                    sx={{ fontWeight: "bold" }}
-                    variant="body1"
-                  >
-                    #{item.chapter_index}
-                  </Typography>
-                  <Typography className="truncate" variant="body1">
-                    {item.chapter_title}
-                  </Typography>
-                </div>
-                <div className="flex flex-row justify-between items-center gap-3">
-                  <Typography className="truncate" variant="body1">
-                    {item.volumn_name}
-                  </Typography>
-                  <Typography
-                    className="border-2 rounded-lg p-1 bg-slate-500"
-                    sx={{ fontWeight: "bold" }}
-                    variant="body1"
-                  >
-                    {new Date(item.up_time).toLocaleDateString()}
-                  </Typography>
-                </div>
-              </div>
-            ))}
-        </div>
-      </div> */}
-      <div className="w-full">
+      <div className="mt-4 w-full">
         <FullWidthTabs
           description={novel.description_text}
           novel_id={novel.id}

@@ -1,17 +1,16 @@
 "use client";
 import CvItem from "./CvItem";
 import React, { useEffect } from "react";
-import { ZhContext } from "../contexts/ToolBoxContext";
-import { EditBoxContext } from "../contexts/EditBoxContext";
 import ZhItem from "./ZhItem";
+import { useSettings } from "../contexts/SettingContext";
 export default function CVline({ line }: { line: string }) {
   //const [zh, setZh] = useState(data);
-  const { data, setData } = React.useContext(ZhContext);
+  const { readingSetting } = useSettings();
 
   return (
     <div>
       <div>
-        {data === "true" &&
+        {readingSetting.chineseAlongside === true &&
           line.split("\t\t\t").map((item) => {
             const parts = item.split("  ");
             if (parts.length < 3) {
